@@ -30,9 +30,9 @@ pip install -r requirements.txt
 ### 4. Configurer les variables d'environnement
 Créez un fichier `.env` à la racine du projet avec les variables nécessaires.
 ```bash
-DB_USERNAME=ton_nom_d_utilisateur
-DB_PASSWORD=ton_mot_de_passe
-DB_HOST=l'adresse_de_ton_serveur
+DB_USERNAME=nom_d_utilisateur
+DB_PASSWORD=mot_de_passe
+DB_HOST=adresse_du_server
 DB_PORT=3306
 DB_NAME=flight_tracker
 ```
