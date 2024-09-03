@@ -9,12 +9,12 @@ engine = create_connection()
 CREATE_TABLE_QUERIES = [
     """CREATE TABLE airports (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    iata_code VARCHAR(3) UNIQUE,
+    iata VARCHAR(10) UNIQUE,
+    icao VARCHAR(10) DEFAULT NULL,
     name VARCHAR(100),
     city VARCHAR(100),
     country VARCHAR(100),
-    latitude DECIMAL(9,6),
-    longitude DECIMAL(9,6)
+    timezone VARCHAR(50)
 );
     """,
     """CREATE TABLE aircrafts (
