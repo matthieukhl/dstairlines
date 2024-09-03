@@ -1,62 +1,63 @@
-import os
-from sqlalchemy import create_engine, Column, Integer, String, DECIMAL, DateTime, ForeignKey
-from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy.orm import sessionmaker
-from dotenv import load_dotenv
+from sqlalchemy.exc import SQLAlchemyError
+from sqlalchemy import text
+from db_connection import create_connection
 
-# Charger les variables d'environnement depuis le fichier .env
-load_dotenv()
+# Création de la connexion avec create_connection
+engine = create_connection()
 
-# Récupérer les informations de connexion depuis les variables d'environnement
-DB_USERNAME = os.getenv('DB_USERNAME')
-DB_PASSWORD = os.getenv('DB_PASSWORD')
-DB_HOST = os.getenv('DB_HOST')
-DB_PORT = os.getenv('DB_PORT')
-DB_NAME = os.getenv('DB_NAME')
-
-# Construire l'URL de connexion à la base de données
-DATABASE_URL = f"mysql+mysqlconnector://{DB_USERNAME}:{DB_PASSWORD}@{DB_HOST}:{DB_PORT}/{DB_NAME}"
-
-# Créer le moteur SQLAlchemy
-engine = create_engine(DATABASE_URL)
-
-# Déclarer la base pour les modèles
-Base = declarative_base()
-
-# Définir les modèles pour les tables
-class Airport(Base):
-    __tablename__ = 'airports'
-    id = Column(Integer, primary_key=True, autoincrement=True)
-    iata_code = Column(String(3), unique=True, nullable=False)
-    name = Column(String(100))
-    city = Column(String(100))
-    country = Column(String(100))
-    latitude = Column(DECIMAL(9, 6))
-    longitude = Column(DECIMAL(9, 6))
-
-class Aircraft(Base):
-    __tablename__ = 'aircrafts'
-    id = Column(Integer, primary_key=True, autoincrement=True)
-    registration = Column(String(20), nullable=False)
-    model = Column(String(50))
-    airline = Column(String(50))
-    icao_code = Column(String(4))
-
-class Flight(Base):
-    __tablename__ = 'flights'
-    id = Column(Integer, primary_key=True, autoincrement=True)
-    flight_number = Column(String(10), nullable=False)
-    departure_airport = Column(String(3), ForeignKey('airports.iata_code'))
-    arrival_airport = Column(String(3), ForeignKey('airports.iata_code'))
-    scheduled_departure = Column(DateTime)
-    scheduled_arrival = Column(DateTime)
-    status = Column(String(50))
-    aircraft_id = Column(Integer, ForeignKey('aircrafts.id'))
-
+# Requêtes SQL pour créer les tables
+CREATE_TABLE_QUERIES = [
+    """CREATE TABLE airports (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    iata_code VARCHAR(3) UNIQUE,
+    name VARCHAR(100),
+    city VARCHAR(100),
+    country VARCHAR(100),
+    latitude DECIMAL(9,6),
+    longitude DECIMAL(9,6)
+);
+    """,
+    """CREATE TABLE aircrafts (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    registration VARCHAR(20) NOT NULL,
+    model VARCHAR(50),
+    airline VARCHAR(50),
+    icao_code VARCHAR(4)
+);
+    """,
+    """CREATE TABLE flights (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    flight_number VARCHAR(10) NOT NULL,
+    departure_airport VARCHAR(3),
+    arrival_airport VARCHAR(3),
+    scheduled_departure DATETIME,
+    scheduled_arrival DATETIME,
+    status VARCHAR(50),
+    aircraft_id INT,
+    FOREIGN KEY (departure_airport) REFERENCES airports(iata_code),
+    FOREIGN KEY (arrival_airport) REFERENCES airports(iata_code),
+    FOREIGN KEY (aircraft_id) REFERENCES aircrafts(id)
+);
+    """,
+    """CREATE TABLE countries (
+	id INT AUTO_INCREMENT PRIMARY KEY,
+    country VARCHAR(100) NOT NULL,
+    code VARCHAR(2) DEFAULT NULL,
+    capital VARCHAR(100) DEFAULT NULL,
+    latitude VARCHAR(36) DEFAULT NULL,
+    longitude VARCHAR(36) DEFAULT NULL
+);
+    """
+]
 # Créer toutes les tables
 def create_tables():
-    Base.metadata.create_all(engine)
-    print("Tables created successfully")
+    with engine.connect() as connection:
+        for query in CREATE_TABLE_QUERIES:
+            try:
+                connection.execute(text(query))
+                print("Table created successfully")
+            except SQLAlchemyError as e:
+                print(f"Error occured: {e}")
 
 if __name__ == "__main__":
     create_tables()
