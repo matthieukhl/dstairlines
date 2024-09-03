@@ -56,7 +56,12 @@ docker run --name mysql-container -e MYSQL_ROOT_PASSWORD=yourpassword -e MYSQL_D
 docker exec -it mysql-container mysql -u root -p
 ```
 
-4. Arrêt et suppression du conteneur MySQL
+4. Créez la base flight_tracker
+```sql
+CREATE DATABASE flight_tracker
+```
+
+5. Arrêt et suppression du conteneur MySQL
 ```bash
 docker stop mysql-container
 docker rm mysql-container
