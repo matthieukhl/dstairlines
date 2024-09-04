@@ -19,10 +19,15 @@ CREATE_TABLE_QUERIES = [
     """,
     """CREATE TABLE aircrafts (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    registration VARCHAR(20) NOT NULL,
-    model VARCHAR(50),
-    airline VARCHAR(50),
-    icao_code VARCHAR(4)
+    model_name VARCHAR(50) NOT NULL,
+    country VARCHAR(100) DEFAULT NULL,
+    engines INT DEFAULT NULL,
+    first_flight YEAR DEFAULT NULL,
+    airline_service_entry YEAR DEFAULT NULL,
+    number_built INT DEFAULT NULL,
+    nb_in_service INT DEFAULT NULL,
+    end_of_production YEAR DEFAULT NULL,
+    year_retired YEAR DEFAULT NULL
 );
     """,
     """CREATE TABLE flights (
