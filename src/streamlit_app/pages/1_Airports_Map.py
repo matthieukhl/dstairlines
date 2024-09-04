@@ -1,6 +1,7 @@
 import streamlit as st
 import pandas as pd
 import os
+import pydeck as pdk
 
 # Define Header
 st.title("Airports Around the World")
@@ -23,4 +24,29 @@ current_dir = os.path.dirname(__file__)
 df2_path = os.path.join(current_dir, "..", "..", "..", "data", "raw", "airports_data.csv")
 df2 = pd.read_csv(df2_path)
 
-st.map(df2)
+st.pydeck_chart(
+    pdk.Deck(
+        map_style=None,
+        initial_view_state=pdk.ViewState(
+            latitude=37.76,
+            longitude=-122.4,
+            zoom=11,
+        ),
+        layers=[
+            pdk.Layer(
+                "ScatterplotLayer",
+                data=df2,
+                pickable=True,
+                stroked=True,
+                filled=True,
+                get_position="[lon, lat]",
+                get_color="[200, 30, 0, 160]",
+                get_radius= 1000,
+                radius_scale=2 * 11,
+                radis_min_pixels=5,
+                radius_max_pixels=10,
+            ),
+        ],
+        tooltip={"text": "{name} {iata}"}
+    )
+)
