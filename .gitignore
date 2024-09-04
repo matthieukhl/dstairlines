@@ -17,3 +17,6 @@ __pycache__/
 
 # VSCode settings
 .vscode/
+
+# Streamlit
+/Users/matthieukhl/Documents/dstairlines/src/streamlit_app/.streamlit/secrets.toml
