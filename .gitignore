@@ -19,4 +19,4 @@ __pycache__/
 .vscode/
 
 # Streamlit
-/Users/matthieukhl/Documents/dstairlines/src/streamlit_app/.streamlit/secrets.toml
+/Users/matthieukhl/Documents/dstairlines/.streamlit/
