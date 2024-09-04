@@ -36,6 +36,25 @@ DB_HOST=adresse_du_server
 DB_PORT=3306
 DB_NAME=flight_tracker
 ```
+
+Pour streamlit créez à la racine du projet le fichier `/.streamlit/secrets.toml`
+```bash
+mkdir .streamlit
+touch .streamlit/secrets.toml
+```
+
+Complétez la configuration suivante avec les informations d'accès à votre base de données MySQL :
+```toml
+[connections.mysql]
+dialect = "mysql"
+host = "127.0.0.1"
+port = 3306
+database = "flight_tracker"
+username = "username"
+password = "password"
+query = { charset = "utf8mb4" }
+````
+
 ### 5. Lancer MySQL avec Docker
 
 1. Vérifiez l'installation de Docker
