@@ -9,7 +9,7 @@
 - Git
 - Docker (pour lancer MySQL dans un conteneur)
 
-### 1. Cloner le dépôt
+### 1. Clonez le dépôt
 
 ```bash
 git clone https://github.com/ton-utilisateur/ton-repo.git
@@ -25,6 +25,8 @@ venv\Scripts\activate  # Sous Windows
 
 ### 3. Installer les dépendances
 ```bash
+brew install mysql
+brew install pkg-config
 pip install -r requirements.txt
 ```
 ### 4. Configurer les variables d'environnement
