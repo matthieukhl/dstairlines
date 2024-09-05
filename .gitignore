@@ -20,3 +20,6 @@ __pycache__/
 
 # Streamlit
 /.streamlit/
+
+# DS_Store
+.DS_Store
