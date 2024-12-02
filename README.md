@@ -85,3 +85,17 @@ CREATE DATABASE flight_tracker
 docker stop mysql-container
 docker rm mysql-container
 ```
+6. Création des tables
+```bash
+python3 src/database/create_tables.py
+```
+
+7. Insertion des données
+```bash
+python3 src/database/insert_data.py
+```
+
+8. Lancement de l'application Streamlit
+```bash
+streamlit run src/streamlitapp/Home.py
+```
