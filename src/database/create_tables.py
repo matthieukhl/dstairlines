@@ -39,8 +39,8 @@ CREATE_TABLE_QUERIES = [
     scheduled_arrival DATETIME,
     status VARCHAR(50),
     aircraft_id INT,
-    FOREIGN KEY (departure_airport) REFERENCES airports(iata_code),
-    FOREIGN KEY (arrival_airport) REFERENCES airports(iata_code),
+    FOREIGN KEY (departure_airport) REFERENCES airports(iata),
+    FOREIGN KEY (arrival_airport) REFERENCES airports(iata),
     FOREIGN KEY (aircraft_id) REFERENCES aircrafts(id)
 );
     """,

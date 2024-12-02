@@ -107,6 +107,7 @@ def import_aircrafts(engine):
     # Convert HTML tables to DataFrame objects
     df_list = pd.read_html(str(tables))
     df_current, df_planned, df_oop, df_historical = df_list[0], df_list[1], df_list[2], df_list[3]
+    print(df_historical.columns)
 
     # Rename columns to maintain consistency and readability
     rename_dict = {
@@ -117,14 +118,14 @@ def import_aircrafts(engine):
         "Engines[c]": "engines",
         "Engines[e]": "engines",
         "Engines[h]": "engines",
-        "First Flight": "first_flight",
+        "First flight": "first_flight",
         "Airline service entry": "airline_service_entry",
-        "End of Production": "end_of_production",
-        "Number Built": "number_built",
-        "In Service [1][b]": "nb_in_service",
-        "In Service [1][d]": "nb_in_service",
-        "In Service[1][f]": "nb_in_service",
-        "Year Retired[i]": "year_retired"
+        "End of production": "end_of_production",
+        "Number built": "number_built",
+        "In service[1][b]": "nb_in_service",
+        "In service [1][d]": "nb_in_service",
+        "In service[1][f]": "nb_in_service",
+        "Year retired[i]": "year_retired"
     }
 
     # Apply renaming across all dataframes
