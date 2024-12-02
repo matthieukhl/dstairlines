@@ -85,9 +85,3 @@ CREATE DATABASE flight_tracker
 docker stop mysql-container
 docker rm mysql-container
 ```
-
-6. Lancer l'application streamlit
-A la racine du projet, lancez la commande suivante :
-```bash
-streamlit run src/streamlitapp/Home.py
-```
